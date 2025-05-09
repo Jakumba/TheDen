@@ -7,7 +7,7 @@ using static Content.Shared.Paper.SharedPaperComponent;
 namespace Content.Client.Paper.UI;
 
 [UsedImplicitly]
-public sealed class PaperBoundUserInterface : BoundUserInterface
+public sealed partial class PaperBoundUserInterface : BoundUserInterface // DeltaV - made partial
 {
     [ViewVariables]
     private PaperWindow? _window;
@@ -22,6 +22,9 @@ public sealed class PaperBoundUserInterface : BoundUserInterface
 
         _window = this.CreateWindow<PaperWindow>();
         _window.OnSaved += InputOnTextEntered;
+        _window.Typing += OnTyping; // DeltaV
+        _window.SubmitPressed += OnSubmit; // DeltaV
+        _window.OnClose += OnSubmit; // DeltaV
 
         if (EntMan.TryGetComponent<PaperVisualsComponent>(Owner, out var visuals))
         {

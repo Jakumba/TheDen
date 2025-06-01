@@ -61,3 +61,20 @@
 - type: typingIndicator
   id: skeleton
   typingState: skeleton0
+
+- type: typingIndicator
+  id: feroxi
+  spritePath: /Textures/_DV/Effects/speech.rsi
+  typingState: feroxi0
+
+- type: typingIndicator
+  id: aac
+  spritePath: /Textures/_DV/Effects/speech.rsi
+  typingState: aac0
+  offset: -0.05, 0.1
+
+- type: typingIndicator
+  id: paper
+  spritePath: /Textures/_DV/Effects/speech.rsi
+  typingState: paper0
+  offset: 0, 0.1

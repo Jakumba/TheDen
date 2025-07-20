@@ -314,6 +314,15 @@
     damageProtection:
       flatReductions:
         Heat: 10 # capable of touching light bulbs and stoves without feeling pain!
+  - type: CyborgSparkEffect #starlight
+  - type: StationAIShunt #Starlight allow shunting into all borgs
+
+- type: entity
+  abstract: true
+  parent: BaseBorgChassisNotIonStormable
+  id: BaseBorgChassis
+  components:
+  - type: IonStormTarget
 
 - type: entity
   abstract: true

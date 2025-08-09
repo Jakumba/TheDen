@@ -705,6 +705,7 @@
     - HideContextMenu
     - StationAi
     - NoConsoleSound
+    - CanPilot
   - type: LanguageKnowledge
     speaks:
     - TauCetiBasic

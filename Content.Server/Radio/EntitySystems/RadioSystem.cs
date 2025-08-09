@@ -181,6 +181,74 @@ public sealed class RadioSystem : EntitySystem
         var notUdsMsg = new ChatMessage(ChatChannel.Radio, obfuscated, obfuscatedWrapped, NetEntity.Invalid, null);
 
         var ev = new RadioReceiveEvent(messageSource, channel, msg, notUdsMsg, language, radioSource);
+        // 🌟Starlight🌟 - Get job icon and name for the message
+
+        var iconId = "JobIconNoId";
+        var jobName = "";
+
+        if (_accessReader.FindAccessItemsInventory(messageSource, out var items))
+        {
+            foreach (var item in items)
+            {
+                // ID Card
+                if (TryComp<IdCardComponent>(item, out var id))
+                {
+                    iconId = id.JobIcon;
+                    jobName = id.LocalizedJobTitle;
+                    break;
+                }
+
+                // PDA
+                if (TryComp<PdaComponent>(item, out var pda)
+                    && pda.ContainedId != null
+                    && TryComp(pda.ContainedId, out id))
+                {
+                    iconId = id.JobIcon;
+                    jobName = id.LocalizedJobTitle;
+                    break;
+                }
+            }
+        }
+
+        if (HasComp<BorgChassisComponent>(messageSource) || HasComp<BorgBrainComponent>(messageSource))
+        {
+            iconId = "JobIconBorg";
+            jobName = Loc.GetString("job-name-borg");
+        }
+
+        //starlight if statement edited for AI Shunt
+        if (HasComp<StationAiHeldComponent>(messageSource) || (
+            TryComp<StationAIShuntComponent>(messageSource, out var aiShunt) && aiShunt.Return.HasValue
+        ))
+        {
+            iconId = "JobIconStationAi";
+            jobName = Loc.GetString("job-name-station-ai");
+        }
+
+        _chime.TryGetSenderHeadsetChime(messageSource, out var chime);
+        // End Starlight
+
+        var wrappedMessage = Loc.GetString(speech.Bold ? "chat-radio-message-wrap-bold" : "chat-radio-message-wrap",
+            ("color", channel.Color),
+            ("fontType", speech.FontId),
+            ("fontSize", speech.FontSize),
+            ("verb", Loc.GetString(_random.Pick(speech.SpeechVerbStrings))),
+            ("channel", $"\\[{channel.LocalizedName}\\]"),
+            ("name", $"[icon src=\"{iconId}\" tooltip=\"{jobName}\"] {name}"),  // 🌟Starlight🌟
+            ("message", content));
+
+        // most radios are relayed to chat, so lets parse the chat message beforehand
+        var chat = new ChatMessage(
+            ChatChannel.Radio,
+            message,
+            wrappedMessage,
+            NetEntity.Invalid,
+            null)
+        {
+            Chime = chime, // 🌟Starlight🌟
+        };
+        var chatMsg = new MsgChatMessage { Message = chat };
+        var ev = new RadioReceiveEvent(message, messageSource, channel, radioSource, chatMsg, []);
 
         var sendAttemptEv = new RadioSendAttemptEvent(channel, radioSource);
         RaiseLocalEvent(ref sendAttemptEv);

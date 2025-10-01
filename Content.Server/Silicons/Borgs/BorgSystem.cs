@@ -185,11 +185,11 @@ public sealed partial class BorgSystem : SharedBorgSystem
                 TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable) &&
                 EnsureComp<StationAIShuntComponent>(uid, out var borgShunt)
                 )
-                {
-                    shuntable.Inhabited = uid;
-                    borgShunt.Return = shunt.Return;
-                    borgShunt.ReturnAction = _actions.AddAction(uid, shuntable.UnshuntAction);
-                }
+            {
+                shuntable.Inhabited = uid;
+                borgShunt.Return = shunt.Return;
+                borgShunt.ReturnAction = _actions.AddAction(uid, shuntable.UnshuntAction);
+            }
             //#endregion Starlight
             _mind.TransferTo(mindId, uid, mind: mind);
         }
@@ -206,13 +206,13 @@ public sealed partial class BorgSystem : SharedBorgSystem
             if (TryComp<StationAIShuntComponent>(args.Entity, out var shunt) &&
                 TryComp<StationAIShuntableComponent>(shunt.Return, out var shuntable) &&
                 TryComp<StationAIShuntComponent>(uid, out var borgShunt))
-                {
-                    shuntable.Inhabited = args.Entity;
-                    if (TryComp<ActionsComponent>(borgShunt.ReturnAction, out var action))
-                        _actions.RemoveAction(borgShunt.ReturnAction.Value); //delete the action as we leave the body
-                    borgShunt.Return = null;
-                    borgShunt.ReturnAction = null;
-                }
+            {
+                shuntable.Inhabited = args.Entity;
+                if (TryComp<ActionsComponent>(borgShunt.ReturnAction, out var action))
+                    _actions.RemoveAction(borgShunt.ReturnAction.Value); //delete the action as we leave the body
+                borgShunt.Return = null;
+                borgShunt.ReturnAction = null;
+            }
             //#endregion
             _mind.TransferTo(mindId, args.Entity, mind: mind);
         }

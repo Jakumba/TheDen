@@ -25,8 +25,8 @@ using Content.Server.Explosion.EntitySystems;
 using Content.Server.Hands.Systems;
 using Content.Server.PowerCell;
 using Content.Shared._Starlight.Silicons.Borgs;
-using Content.Shared.Actions.Components;
 using Content.Shared.Access.Systems;
+using Content.Shared.Actions;
 using Content.Shared.Alert;
 using Content.Shared.Database;
 using Content.Shared.IdentityManagement;
@@ -210,8 +210,8 @@ public sealed partial class BorgSystem : SharedBorgSystem
                     shuntable.Inhabited = args.Entity;
                     if (TryComp<StationAIShuntComponent>(uid, out var borgShunt))
                     {
-                        if (TryComp<ActionComponent>(borgShunt.ReturnAction, out var action))
-                            _actions.RemoveAction((borgShunt.ReturnAction.Value, action)); //delete the action as we leave the body
+                        if (TryComp<ActionsComponent>(borgShunt.ReturnAction, out var action))
+                            _actions.RemoveAction(borgShunt.ReturnAction.Value); //delete the action as we leave the body
                         borgShunt.Return = null;
                         borgShunt.ReturnAction = null;
                     }

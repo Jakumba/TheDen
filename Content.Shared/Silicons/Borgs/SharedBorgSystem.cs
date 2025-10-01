@@ -17,6 +17,7 @@ using Content.Shared.PowerCell.Components;
 using Content.Shared.Silicons.Borgs.Components;
 using Content.Shared.UserInterface;
 using Content.Shared.Wires;
+using Content.Shared.Actions;
 using Robust.Shared.Containers;
 
 namespace Content.Shared.Silicons.Borgs;
@@ -30,6 +31,7 @@ public abstract partial class SharedBorgSystem : EntitySystem
     [Dependency] protected readonly ItemSlotsSystem ItemSlots = default!;
     [Dependency] protected readonly ItemToggleSystem Toggle = default!;
     [Dependency] protected readonly SharedPopupSystem Popup = default!;
+    [Dependency] private readonly SharedActionsSystem _actions = default!;
 
     /// <inheritdoc/>
     public override void Initialize()

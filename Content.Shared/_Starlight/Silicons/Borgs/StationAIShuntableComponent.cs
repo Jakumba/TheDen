@@ -1,4 +1,4 @@
-using Content.Shared.Actions.Components;
+using Content.Shared.Actions;
 using Robust.Shared.GameStates;
 using Robust.Shared.Prototypes;
 
@@ -14,7 +14,7 @@ public sealed partial class StationAIShuntableComponent : Component
     /// what action is granted to the ai to allow them to return to their body.
     /// </summary>
     [DataField]
-    public EntProtoId<ActionComponent> UnshuntAction = "ActionAIUnShunt";
+    public EntProtoId<ActionsComponent> UnshuntAction = "ActionAIUnShunt";
 
     /// <summary>
     /// What body is this AI currently inhabiting, null if the AI is in it's core.
